@@ -60,20 +60,12 @@ function RevealSection({ children, className = '', style = {} }: { children: Rea
 }
 
 import Footer from '../components/Footer';
+import Navbar from '../components/Navbar';
 
 export default function Story() {
   return (
     <>
-      <nav>
-        <Link to="/" className="logo">ironic</Link>
-        <ul>
-          <li><Link to="/" className="active">הסיפור</Link></li>
-          <li><Link to="/product">חנות</Link></li>
-          <li><Link to="/projects">פרויקטים</Link></li>
-          <li><Link to="/blog">בלוג</Link></li>
-        </ul>
-        <a href="#" style={{ color: 'var(--cyan)', fontSize: '13px' }}>צור קשר</a>
-      </nav>
+      <Navbar />
 
       {/* HERO */}
       <section className="hero">

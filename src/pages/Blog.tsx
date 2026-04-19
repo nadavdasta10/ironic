@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { collection, onSnapshot, query, orderBy } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 import Footer from '../components/Footer';
+import Navbar from '../components/Navbar';
 
 function RevealSection({ children, className = '', style = {} }: { children: ReactNode; className?: string; style?: CSSProperties }) {
   const ref = useRef<HTMLElement>(null);
@@ -114,16 +115,7 @@ export default function Blog() {
 
   return (
     <>
-      <nav>
-        <Link to="/" className="logo">ironic</Link>
-        <ul>
-          <li><Link to="/">הסיפור</Link></li>
-          <li><Link to="/product">חנות</Link></li>
-          <li><Link to="/projects">פרויקטים</Link></li>
-          <li><Link to="/blog" className="active">בלוג</Link></li>
-        </ul>
-        <a href="#" style={{ color: 'var(--cyan)', fontSize: '13px' }}>צור קשר</a>
-      </nav>
+      <Navbar />
 
       {/* HERO SECTION */}
       <section className="blog-hero">

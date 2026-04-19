@@ -4,6 +4,7 @@ import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { onSnapshot, doc } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 import Footer from '../components/Footer';
+import Navbar from '../components/Navbar';
 
 const DEFAULT_COLORS = [
   { hex: '#DC2626', glow: 'rgba(220,38,38,0.3)', name: 'Red' },
@@ -69,11 +70,22 @@ export default function Product() {
   const [showToast, setShowToast] = useState(false);
   const [showPayment, setShowPayment] = useState(false);
   const [showBitModal, setShowBitModal] = useState(false);
+  const [imageLoading, setImageLoading] = useState(true);
   const logoSlotRef = useRef<HTMLDivElement>(null);
 
   const isLight = LIGHT_COLORS.includes(color.hex);
   const placeholderColor = isLight ? 'rgba(0,0,0,0.5)' : 'rgba(255,255,255,0.4)';
   const placeholderBorder = isLight ? 'rgba(0,0,0,0.3)' : 'rgba(255,255,255,0.2)';
+
+  const currentImageSrc = color.hex === '#EA580C' ? '/orange-set.jpg' :
+                          color.hex === '#111111' ? '/black-set.jpg' :
+                          color.hex === '#FFFFFF' ? '/white-set.jpg' :
+                          color.hex === '#DC2626' ? '/coca-cola-set.jpg' :
+                          '/cream-set.jpg';
+
+  useEffect(() => {
+    setImageLoading(true);
+  }, [currentImageSrc]);
 
   const handleLogoUpload = (file: File) => {
     if (file.size > 5 * 1024 * 1024) {
@@ -154,13 +166,7 @@ export default function Product() {
 
   return (
     <>
-      <nav className="sticky-nav">
-        <Link to="/" className="logo">ironic</Link>
-        <div className="breadcrumb">
-          <Link to="/product">חנות</Link> / <Link to="/product">סטים</Link> / <span style={{ color: 'var(--white)' }}>סט ברקלאב</span>
-        </div>
-        <a href="#" className="cart">עגלה (0)</a>
-      </nav>
+      <Navbar />
 
       <main className="product-main">
         <div className="product-grid">
@@ -199,26 +205,33 @@ export default function Product() {
                   }}
                 />
                 <img 
-                  src={
-                    color.hex === '#EA580C' ? '/orange-set.jpg' :
-                    color.hex === '#111111' ? '/black-set.jpg' :
-                    color.hex === '#FFFFFF' ? '/white-set.jpg' :
-                    color.hex === '#DC2626' ? '/coca-cola-set.jpg' :
-                    '/cream-set.jpg' // Default base image for tinting
-                  } 
+                  src={currentImageSrc}
                   alt={`סט ריהוט בצבע ${color.name}`}
                   style={{ 
                     maxWidth: '100%', 
                     maxHeight: '100%', 
                     objectFit: 'contain',
                     borderRadius: '20px',
-                    boxShadow: `0 20px 60px ${color.glow}`
+                    boxShadow: `0 20px 60px ${color.glow}`,
+                    opacity: imageLoading ? 0 : 1,
+                    transition: 'opacity 0.4s ease'
                   }} 
+                  onLoad={() => setImageLoading(false)}
                   onError={(e) => {
-                    // Fallback to placeholder if user hasn't uploaded the files yet
-                    e.currentTarget.src = color.hex === '#DC2626' ? 'https://picsum.photos/seed/cocacola/600/800' : `https://picsum.photos/seed/barrel-${color.hex.replace('#','')}/600/800`;
+                    const target = e.currentTarget;
+                    if (!target.src.includes('picsum')) {
+                      target.src = color.hex === '#DC2626' ? 'https://picsum.photos/seed/cocacola/600/800' : `https://picsum.photos/seed/barrel-${color.hex.replace('#','')}/600/800`;
+                    } else {
+                      setImageLoading(false);
+                    }
                   }}
                 />
+                
+                {imageLoading && (
+                  <div className="image-loading-overlay">
+                    <div className="spinner"></div>
+                  </div>
+                )}
 
                 <div className="barrel" id="barrel" style={{ position: 'absolute', width: '100px', height: '100px', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', opacity: logoData ? 1 : 0, pointerEvents: 'none' }}>
                   <div className="logo-slot" id="logoSlot" ref={logoSlotRef} style={{ border: 'none', background: 'transparent' }}>

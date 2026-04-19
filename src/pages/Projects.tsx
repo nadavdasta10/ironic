@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, CSSProperties, ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
+import Navbar from '../components/Navbar';
 
 function RevealSection({ children, className = '', style = {} }: { children: ReactNode; className?: string; style?: CSSProperties }) {
   const ref = useRef<HTMLElement>(null);
@@ -78,16 +79,7 @@ const PROJECTS = [
 export default function Projects() {
   return (
     <>
-      <nav>
-        <Link to="/" className="logo">ironic</Link>
-        <ul>
-          <li><Link to="/">הסיפור</Link></li>
-          <li><Link to="/product">חנות</Link></li>
-          <li><Link to="/projects" className="active">פרויקטים</Link></li>
-          <li><Link to="/blog">בלוג</Link></li>
-        </ul>
-        <a href="#" style={{ color: 'var(--cyan)', fontSize: '13px' }}>צור קשר</a>
-      </nav>
+      <Navbar />
 
       <section className="blog-hero">
         <div className="hero-tag">// OUR WORK</div>
