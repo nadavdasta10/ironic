@@ -1,0 +1,63 @@
+{
+  "entities": {
+    "BlogPost": {
+      "title": "Blog Post",
+      "description": "A single blog post entry.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "tag": { "type": "string" },
+        "excerpt": { "type": "string" },
+        "date": { "type": "string" },
+        "seed": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" },
+        "ownerId": { "type": "string" }
+      },
+      "required": ["title", "tag", "excerpt", "date", "seed", "createdAt", "updatedAt", "ownerId"]
+    },
+    "ProductConfig": {
+      "title": "Product Config",
+      "description": "Global settings for the store.",
+      "type": "object",
+      "properties": {
+        "fontDisplay": { "type": "string" },
+        "fontBody": { "type": "string" },
+        "updatedAt": { "type": "string" },
+        "ownerId": { "type": "string" }
+      },
+      "required": ["fontDisplay", "fontBody", "updatedAt", "ownerId"]
+    },
+    "Product": {
+      "title": "Product Entry",
+      "description": "A single product in the store",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "price": { "type": "number" },
+        "shippingPrice": { "type": "number" },
+        "extraPrice": { "type": "number" },
+        "imageUrl": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" },
+        "ownerId": { "type": "string" }
+      },
+      "required": ["title", "description", "price", "shippingPrice", "extraPrice", "imageUrl", "createdAt", "updatedAt", "ownerId"]
+    }
+  },
+  "firestore": {
+    "/blogPosts/{postId}": {
+      "schema": { "$ref": "#/entities/BlogPost" },
+      "description": "Stores all blog posts."
+    },
+    "/storeConfig/{configId}": {
+      "schema": { "$ref": "#/entities/ProductConfig" },
+      "description": "Stores generic shop config like fonts."
+    },
+    "/products/{productId}": {
+      "schema": { "$ref": "#/entities/Product" },
+      "description": "Stores all individual shop products."
+    }
+  }
+}
