@@ -128,30 +128,32 @@ export default function Blog() {
         
         {/* FEATURED POST */}
         <RevealSection>
-          <Link to="#" className="featured-post">
-            <div className="featured-image">
-              <img src="https://picsum.photos/seed/industrial/1000/800" alt="Featured Article" />
-            </div>
-            <div className="featured-content">
-              <div className="blog-tag">// מומלץ החודש</div>
-              <h2 className="blog-title">5 טעויות שבעלי ברים עושים בבחירת ריהוט</h2>
-              <p className="blog-excerpt">מוציאים תקציב ענק על עיצוב פנים ונופלים בכיסאות שייהרסו תוך חודשיים? אנחנו רואים את זה קורה כל יום. הנה מה שאתם חייבים לדעת לפני שאתם קונים ריהוט למקום החדש שלכם.</p>
-              <div className="blog-meta">
-                <span className="blog-date">15 באפריל, 2026</span>
-                <span className="blog-read-more">קרא עוד</span>
+          {postsToRender.length > 0 && (
+            <Link to="#" className="featured-post">
+              <div className="featured-image">
+                <img src={postsToRender[0].image ? postsToRender[0].image : `https://picsum.photos/seed/${postsToRender[0].seed || 'industrial'}/1000/800`} alt="Featured Article" />
               </div>
-            </div>
-          </Link>
+              <div className="featured-content">
+                <div className="blog-tag">{postsToRender[0].tag || '// מומלץ החודש'}</div>
+                <h2 className="blog-title">{postsToRender[0].title}</h2>
+                <p className="blog-excerpt">{postsToRender[0].excerpt}</p>
+                <div className="blog-meta">
+                  <span className="blog-date">{postsToRender[0].date}</span>
+                  <span className="blog-read-more">קרא עוד</span>
+                </div>
+              </div>
+            </Link>
+          )}
         </RevealSection>
 
         {/* POSTS GRID */}
         <RevealSection style={{ paddingTop: '20px' }}>
           <div className="section-label" style={{ textAlign: 'right' }}>// ALL ARCHIVES</div>
           <div className="blog-grid">
-            {postsToRender.map(post => (
+            {postsToRender.slice(1).map(post => (
               <Link to="#" className="blog-card" key={post.id} style={{ display: 'flex' }}>
                 <div className="blog-card-image">
-                  <img src={`https://picsum.photos/seed/${post.seed}/600/400`} alt={post.title} />
+                  <img src={post.image ? post.image : `https://picsum.photos/seed/${post.seed || 'factory'}/600/400`} alt={post.title} />
                 </div>
                 <div className="blog-card-content">
                   <div className="blog-tag">{post.tag}</div>

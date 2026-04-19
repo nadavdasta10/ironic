@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, DragEvent, ChangeEvent, CSSProperties } from 'react';
 import { Link } from 'react-router-dom';
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
-import { onSnapshot, doc } from 'firebase/firestore';
+import { onSnapshot, doc, addDoc, collection, serverTimestamp } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
@@ -28,8 +28,8 @@ const DEFAULT_SHIPPING_PRICE = 129;
 
 const BUNDLES = [
   { qty: 1, title: 'יחידה אחת', subtitle: 'סט מושלם לבר', badge: null, discount: 0 },
-  { qty: 3, title: '3 יחידות', subtitle: 'חסוך 10%', badge: 'הנמכר ביותר', discount: 0.10 },
-  { qty: 5, title: '5 יחידות', subtitle: 'חסוך 15% + משלוח חינם', badge: 'המשתלם ביותר', discount: 0.15 },
+  { qty: 3, title: '3 יחידות', subtitle: 'חסוך 5%', badge: 'הנמכר ביותר', badgeBg: '#FFE500', badgeText: '#000', discount: 0.05 },
+  { qty: 5, title: '5 יחידות', subtitle: 'חסוך 10%', badge: 'המשתלם ביותר', badgeBg: 'var(--cyan)', badgeText: '#0f0520', discount: 0.10 },
 ];
 
 export default function Product() {
@@ -153,14 +153,14 @@ export default function Product() {
 
   const getDeliveryDate = () => {
     const d = new Date();
-    d.setDate(d.getDate() + 18); // Approx 14 business days
+    d.setDate(d.getDate() + 14); // 14 days supply time
     return d.toLocaleDateString('he-IL', { day: 'numeric', month: 'long' });
   };
 
   const selectedBundle = BUNDLES.find(b => b.qty === bundleQty) || BUNDLES[0];
   const basePriceCalc = BASE_PRICE * bundleQty;
   const subtotal = Math.round(basePriceCalc * (1 - selectedBundle.discount));
-  const finalShippingPrice = (shippingEnabled && bundleQty < 5) ? SHIPPING_PRICE : 0;
+  const finalShippingPrice = shippingEnabled ? SHIPPING_PRICE : 0;
   const logoPriceCalc = logoEnabled ? LOGO_PRICE : 0;
   const totalCalc = subtotal + logoPriceCalc + finalShippingPrice;
 
@@ -292,8 +292,8 @@ export default function Product() {
                           top: '-12px', 
                           left: '50%',
                           transform: 'translateX(-50%)',
-                          background: '#FFE500', 
-                          color: '#000', 
+                          background: b.badgeBg || '#FFE500', 
+                          color: b.badgeText || '#000', 
                           fontSize: '12.5px', 
                           fontWeight: '900', 
                           padding: '4px 16px',
@@ -418,24 +418,17 @@ export default function Product() {
             <div className="options-section" style={{ marginBottom: '30px' }}>
               <span style={{ fontWeight: '600', fontSize: '15px', display: 'block', marginBottom: '12px' }}>אפשרויות שילוח</span>
               <div 
-                className={`logo-option ${(shippingEnabled || bundleQty >= 5) ? 'checked' : ''}`} 
-                style={{ padding: '16px', borderRadius: '12px', opacity: bundleQty >= 5 ? 0.8 : 1, transition: 'all 0.3s' }}
-                onClick={() => {
-                  if (bundleQty < 5) setShippingEnabled(!shippingEnabled);
-                }}
+                className={`logo-option ${shippingEnabled ? 'checked' : ''}`} 
+                style={{ padding: '16px', borderRadius: '12px', transition: 'all 0.3s' }}
+                onClick={() => setShippingEnabled(!shippingEnabled)}
               >
                 <div className="logo-checkbox"></div>
                 <div className="logo-option-text">
-                  <div className="logo-option-title" style={{ fontSize: '14px' }}>משלוח עד הבית</div>
-                  {bundleQty >= 5 ? (
-                    <div className="logo-option-hint" style={{ fontSize: '13px', color: 'var(--cyan)' }}>משלוח חינם ברכישת 5 יחידות ומעלה!</div>
-                  ) : (
-                    <div className="logo-option-hint" style={{ fontSize: '13px' }}>הסרת הסימון במידה ומעוניינים באיסוף עצמי מבית המלאכה</div>
-                  )}
+                  <div className="logo-option-title" style={{ fontSize: '14px' }}>משלוח עד העסק</div>
+                  <div className="logo-option-hint" style={{ fontSize: '13px' }}>הסרת הסימון במידה ומעוניינים באיסוף עצמי מבית המלאכה</div>
                 </div>
                 <div className="logo-option-price">
-                  {bundleQty >= 5 ? <s style={{opacity: 0.5}}>₪{SHIPPING_PRICE}</s> : `+₪${SHIPPING_PRICE}`}
-                  {bundleQty >= 5 && <span style={{color: 'var(--cyan)', marginLeft: '6px', fontWeight: 'bold'}}>חינם</span>}
+                  +₪{SHIPPING_PRICE}
                 </div>
               </div>
             </div>
@@ -464,7 +457,21 @@ export default function Product() {
                         onApprove={async (data, actions) => {
                           if (actions.order) {
                             try {
-                              await actions.order.capture();
+                              const details = await actions.order.capture();
+                              
+                              // Save to database
+                              await addDoc(collection(db, 'orders'), {
+                                status: 'paid',
+                                total: totalCalc,
+                                itemsDesc: `סט ברקלאב - ${color.name} (x${bundleQty}) ${logoEnabled ? '+ לוגו' : ''}`,
+                                customerName: details.payer?.name?.given_name + ' ' + (details.payer?.name?.surname || ''),
+                                customerEmail: details.payer?.email_address,
+                                customerPhone: '', 
+                                shippingAddress: details.purchase_units[0]?.shipping?.address?.address_line_1 || 'נלקח מ-PayPal',
+                                paymentToken: details.id,
+                                createdAt: serverTimestamp()
+                              });
+
                               displayToast("התשלום עבר בהצלחה!");
                               setShowPayment(false);
                             } catch (err) {
@@ -558,7 +565,18 @@ export default function Product() {
             target="_blank" 
             rel="noopener noreferrer" 
             className="whatsapp-btn"
-            onClick={() => setShowBitModal(false)}
+            onClick={() => {
+              // Simulate saving pending order
+              addDoc(collection(db, 'orders'), {
+                status: 'ממתין לאישור ביט',
+                total: totalCalc,
+                itemsDesc: `סט ברקלאב - ${color.name} (x${bundleQty}) ${logoEnabled ? '+ לוגו' : ''}`,
+                customerName: 'לקוח מקור: וואטסאפ',
+                paymentToken: 'BIT-' + Math.floor(Math.random()*10000),
+                createdAt: serverTimestamp()
+              });
+              setShowBitModal(false);
+            }}
           >
             אישור ותחילת ייצור בוואטסאפ →
           </a>

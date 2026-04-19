@@ -121,13 +121,17 @@ nav .cart {
 }
 
 /* ===== STORY PAGE ===== */
-.hero { padding: 160px 40px 80px; position: relative; text-align: center; overflow: hidden; z-index: 3; }
+.hero { padding: 160px 40px 80px; position: relative; text-align: center; overflow: hidden; z-index: 3; background-image: url('/hero-bg.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; }
 .hero::before {
-  content: ""; position: absolute; top: -30%; left: -30%; width: 160%; height: 160%; background: conic-gradient(from 0deg, transparent 0%, rgba(255, 0, 128, 0.12) 25%, transparent 50%, rgba(0, 240, 255, 0.12) 75%, transparent 100%); animation: rotate 35s linear infinite; z-index: -1;
+  content: ""; position: absolute; inset: 0; background: rgba(15, 5, 32, 0.7); z-index: 1;
 }
+.hero::after {
+  content: ""; position: absolute; top: -30%; left: -30%; width: 160%; height: 160%; background: conic-gradient(from 0deg, transparent 0%, rgba(255, 0, 128, 0.12) 25%, transparent 50%, rgba(0, 240, 255, 0.12) 75%, transparent 100%); animation: rotate 35s linear infinite; z-index: 2; mix-blend-mode: overlay;
+}
+.hero-content { position: relative; z-index: 3; }
 .hero-tag { font-family: var(--font-mono); font-size: 12px; letter-spacing: 4px; color: var(--cyan); margin-bottom: 20px; text-shadow: 0 0 15px rgba(0, 240, 255, 0.6); }
-.hero h1 { font-family: var(--font-display); font-size: clamp(70px, 12vw, 160px); line-height: 0.9; letter-spacing: -3px; background: var(--gradient); background-size: 200% 200%; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; animation: gradientShift 6s ease-in-out infinite; margin-bottom: 30px; font-weight: 400; }
-.hero p { font-size: clamp(18px, 2vw, 22px); max-width: 640px; margin: 0 auto; color: rgba(248, 243, 255, 0.85); font-weight: 500; line-height: 1.5; }
+.hero h1 { font-family: var(--font-display); font-size: clamp(70px, 12vw, 160px); line-height: 0.9; letter-spacing: -3px; background: var(--gradient); background-size: 200% 200%; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; animation: gradientShift 6s ease-in-out infinite; margin-bottom: 30px; font-weight: 400; filter: drop-shadow(0 4px 20px rgba(0,0,0,0.5)); }
+.hero p { font-size: clamp(18px, 2vw, 22px); max-width: 640px; margin: 0 auto; color: rgba(248, 243, 255, 0.95); font-weight: 500; line-height: 1.5; text-shadow: 0 2px 8px rgba(0,0,0,0.8); }
 section { padding: 80px 40px; position: relative; z-index: 3; }
 .section-inner { max-width: 1100px; margin: 0 auto; }
 .section-label { font-family: var(--font-mono); font-size: 11px; letter-spacing: 4px; color: var(--cyan); margin-bottom: 16px; text-transform: uppercase; }
@@ -411,6 +415,157 @@ main.product-main {
 .success-icon { width: 80px; height: 80px; background: linear-gradient(135deg, var(--success), #059669); font-size: 40px; color: white; display: flex; align-items: center; justify-content: center; border-radius: 50%; margin: 0 auto 20px; box-shadow: 0 0 30px rgba(16, 185, 129, 0.3); }
 .contact-success h3 { font-family: var(--font-display); font-size: 36px; margin-bottom: 10px; color: var(--white); }
 .contact-success p { color: rgba(255, 255, 255, 0.7); }
+
+/* ===== ADMIN DASHBOARD ===== */
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+  background: #0f0520; /* Deep deep purple */
+  font-family: var(--font-body);
+  direction: rtl;
+}
+
+.admin-sidebar {
+  width: 260px;
+  background: rgba(255, 255, 255, 0.02);
+  border-left: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 20px 15px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.admin-sidebar-logo {
+  font-family: var(--font-display);
+  font-size: 28px;
+  color: var(--white);
+  padding: 10px 15px;
+  margin-bottom: 20px;
+  letter-spacing: 2px;
+}
+
+.admin-sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 15px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 14px;
+  border-radius: 8px;
+  margin-bottom: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: transparent;
+  border: none;
+  text-align: right;
+  width: 100%;
+}
+
+.admin-sidebar-link:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--white);
+}
+
+.admin-sidebar-link.active {
+  background: rgba(0, 240, 255, 0.1);
+  color: var(--cyan);
+  font-weight: 600;
+}
+
+.admin-sidebar-group {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  padding: 0 15px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.admin-main {
+  flex: 1;
+  padding: 40px;
+  overflow-y: auto;
+}
+
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.admin-header-title {
+  font-family: var(--font-display);
+  font-size: 32px;
+  color: var(--white);
+}
+
+.admin-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-chart-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.admin-chart-title h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--white);
+}
+
+.admin-chart-title a {
+  font-size: 13px;
+  color: var(--cyan);
+  text-decoration: none;
+}
+
+.admin-stat-main {
+  font-family: var(--font-display);
+  font-size: 36px;
+  color: var(--white);
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.admin-stat-increase {
+  font-family: var(--font-body);
+  font-size: 18px;
+  color: #4ade80;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+}
+
+.admin-table-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  padding: 8px 0;
+  border-bottom: 1px dashed rgba(255,255,255,0.1);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.admin-table-row:last-child {
+  border-bottom: none;
+}
+
+@media (max-width: 900px) {
+  .admin-layout { flex-direction: column; }
+  .admin-sidebar { width: 100%; border-left: none; border-bottom: 1px solid rgba(255,255,255,0.05); }
+  .admin-main { padding: 20px; }
+}
 
 @media (max-width: 900px) {
   .contact-content { grid-template-columns: 1fr; gap: 40px; }

@@ -10,11 +10,13 @@
         "excerpt": { "type": "string" },
         "date": { "type": "string" },
         "seed": { "type": "string" },
+        "image": { "type": "string" },
+        "meta": { "type": "string" },
         "createdAt": { "type": "string" },
         "updatedAt": { "type": "string" },
         "ownerId": { "type": "string" }
       },
-      "required": ["title", "tag", "excerpt", "date", "seed", "createdAt", "updatedAt", "ownerId"]
+      "required": ["title", "tag", "excerpt", "date", "seed", "image", "meta", "createdAt", "updatedAt", "ownerId"]
     },
     "ProductConfig": {
       "title": "Product Config",
@@ -23,10 +25,13 @@
       "properties": {
         "fontDisplay": { "type": "string" },
         "fontBody": { "type": "string" },
+        "gaId": { "type": "string" },
+        "gtmId": { "type": "string" },
+        "fbPixel": { "type": "string" },
         "updatedAt": { "type": "string" },
         "ownerId": { "type": "string" }
       },
-      "required": ["fontDisplay", "fontBody", "updatedAt", "ownerId"]
+      "required": ["fontDisplay", "fontBody", "gaId", "gtmId", "fbPixel", "updatedAt", "ownerId"]
     },
     "Product": {
       "title": "Product Entry",

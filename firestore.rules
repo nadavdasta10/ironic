@@ -17,13 +17,14 @@ service cloud.firestore {
 
     // BlogPost
     function isValidBlogPost(data) {
-      return data.keys().hasAll(['title', 'tag', 'excerpt', 'date', 'seed', 'createdAt', 'updatedAt', 'ownerId']) &&
-             data.keys().size() == 8 &&
+      return data.keys().hasAll(['title', 'tag', 'excerpt', 'date', 'seed', 'image', 'meta', 'createdAt', 'updatedAt', 'ownerId']) &&
+             data.keys().size() == 10 &&
              data.title is string && data.title.size() > 0 && data.title.size() <= 100 &&
              data.tag is string && data.tag.size() <= 50 &&
-             data.excerpt is string && data.excerpt.size() <= 500 &&
+             data.excerpt is string && data.excerpt.size() <= 600 &&
              data.date is string && data.date.size() <= 50 &&
              data.seed is string && data.seed.size() <= 50 &&
+             data.image is string && data.meta is string && data.meta.size() <= 600 &&
              data.ownerId == request.auth.uid;
     }
 
@@ -37,17 +38,19 @@ service cloud.firestore {
                     incoming().createdAt == existing().createdAt &&
                     incoming().ownerId == existing().ownerId &&
                     incoming().updatedAt == request.time &&
-                    incoming().diff(existing()).affectedKeys().hasOnly(['title', 'tag', 'excerpt', 'date', 'seed', 'updatedAt']);
+                    incoming().diff(existing()).affectedKeys().hasOnly(['title', 'tag', 'excerpt', 'date', 'seed', 'image', 'meta', 'updatedAt', 'ownerId']);
                     
       allow delete: if isAdmin() && isValidId(postId);
     }
 
     // ProductConfig
     function isValidProductConfig(data) {
-      return data.keys().hasAll(['fontDisplay', 'fontBody', 'updatedAt', 'ownerId']) &&
-             data.keys().size() == 4 &&
+       // Since the config is loaded progressively, we may only enforce font fields are present string if present, letting other properties persist
+       // Wait, no, we made them all required. Let's make sure it handles all 7 keys. 
+      return data.keys().hasAll(['fontDisplay', 'fontBody', 'gaId', 'gtmId', 'fbPixel', 'updatedAt', 'ownerId']) &&
              data.fontDisplay is string && data.fontDisplay.size() <= 50 &&
              data.fontBody is string && data.fontBody.size() <= 50 &&
+             data.gaId is string && data.gtmId is string && data.fbPixel is string &&
              data.ownerId == request.auth.uid;
     }
 
@@ -58,7 +61,7 @@ service cloud.firestore {
       allow update: if isAdmin() && isValidId(configId) && isValidProductConfig(incoming()) &&
                     incoming().ownerId == existing().ownerId &&
                     incoming().updatedAt == request.time &&
-                    incoming().diff(existing()).affectedKeys().hasOnly(['fontDisplay', 'fontBody', 'updatedAt']);
+                    incoming().diff(existing()).affectedKeys().hasOnly(['fontDisplay', 'fontBody', 'gaId', 'gtmId', 'fbPixel', 'updatedAt', 'ownerId', 'basePrice', 'logoPrice', 'shippingPrice', 'colors']);
       allow delete: if isAdmin() && isValidId(configId);
     }
     
@@ -81,7 +84,7 @@ service cloud.firestore {
                     incoming().createdAt == existing().createdAt &&
                     incoming().ownerId == existing().ownerId &&
                     incoming().updatedAt == request.time &&
-                    incoming().diff(existing()).affectedKeys().hasOnly(['title', 'description', 'price', 'shippingPrice', 'extraPrice', 'imageUrl', 'updatedAt']);
+                    incoming().diff(existing()).affectedKeys().hasOnly(['title', 'description', 'price', 'shippingPrice', 'extraPrice', 'imageUrl', 'updatedAt', 'ownerId']);
       allow delete: if isAdmin() && isValidId(productId);
     }
     

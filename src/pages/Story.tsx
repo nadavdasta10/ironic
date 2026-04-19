@@ -69,9 +69,11 @@ export default function Story() {
 
       {/* HERO */}
       <section className="hero">
-        <div className="hero-tag">// OUR STORY</div>
-        <h1>trash to<br />table.</h1>
-        <p>איך התחלנו עם ערימת חביות חלודות ובנינו את הריהוט שכולם מצלמים.</p>
+        <div className="hero-content">
+          <div className="hero-tag">// OUR STORY</div>
+          <h1>trash to<br />table.</h1>
+          <p>איך התחלנו עם ערימת חביות חלודות ובנינו את הריהוט שכולם מצלמים.</p>
+        </div>
       </section>
 
       {/* STORY PART 1 */}
