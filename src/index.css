@@ -210,11 +210,29 @@ section { padding: 80px 40px; position: relative; z-index: 3; }
 
 .values-section { padding: 100px 40px; background: var(--deep); }
 .values-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; margin-top: 50px; }
-.value-card { background: linear-gradient(135deg, rgba(157, 0, 255, 0.06), rgba(255, 0, 128, 0.06)); border: 1px solid rgba(255, 0, 128, 0.15); border-radius: 20px; padding: 32px 28px; position: relative; transition: all 0.3s; }
+.value-card { background: linear-gradient(135deg, rgba(157, 0, 255, 0.06), rgba(255, 0, 128, 0.06)); border: 1px solid rgba(255, 0, 128, 0.15); border-radius: 20px; padding: 32px 28px; position: relative; transition: all 0.3s; overflow: hidden; }
 .value-card:hover { transform: translateY(-6px); border-color: var(--pink); box-shadow: 0 20px 60px rgba(255, 0, 128, 0.2); }
 .value-icon { width: 56px; height: 56px; border-radius: 14px; background: var(--gradient); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 28px; color: var(--white); margin-bottom: 18px; letter-spacing: 0; }
 .value-title { font-family: var(--font-display); font-size: 28px; color: var(--white); margin-bottom: 10px; letter-spacing: 0; }
 .value-desc { font-size: 14px; color: rgba(255, 255, 255, 0.7); line-height: 1.7; }
+
+/* Featured value card styles */
+@media (min-width: 900px) {
+  .values-grid { grid-template-columns: repeat(3, 1fr); gap: 30px; }
+  .value-card.featured-value-card { grid-column: span 3; display: flex; flex-direction: row-reverse; padding: 0; min-height: 380px; }
+  .value-card.featured-value-card .value-card-content { flex: 1; padding: 50px 60px; display: flex; flex-direction: column; justify-content: center; z-index: 2; position: relative; }
+  .value-card.featured-value-card .value-title { font-size: 48px; margin-bottom: 20px; }
+  .value-card.featured-value-card .value-desc { font-size: 20px; max-width: 500px; color: var(--white); line-height: 1.6; }
+  .value-card.featured-value-card .value-card-image { flex: 1.2; position: relative; overflow: hidden; }
+  .value-card.featured-value-card .value-card-image img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; transition: transform 0.6s ease; }
+  .value-card.featured-value-card:hover .value-card-image img { transform: scale(1.05); }
+}
+@media (max-width: 900px) {
+  .value-card.featured-value-card { display: flex; flex-direction: column; padding: 0; }
+  .value-card.featured-value-card .value-card-content { padding: 30px 28px; }
+  .value-card.featured-value-card .value-card-image { aspect-ratio: 16/9; }
+  .value-card.featured-value-card .value-card-image img { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; }
+}
 .stats-section { padding: 100px 40px; background: linear-gradient(135deg, var(--deep-2) 0%, var(--deep-3) 100%); position: relative; overflow: hidden; }
 .stats-section::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 20% 30%, rgba(255, 0, 128, 0.15), transparent 40%), radial-gradient(circle at 80% 70%, rgba(0, 240, 255, 0.15), transparent 40%); }
 .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 30px; margin-top: 40px; position: relative; z-index: 2; }
@@ -769,17 +787,24 @@ main.product-main {
 .project-image-wrap { aspect-ratio: 3/4; overflow: hidden; position: relative; background: linear-gradient(135deg, var(--deep-2), var(--deep-3)); }
 .project-image-wrap img { width: 100%; height: 100%; object-fit: cover; opacity: 1; transition: all 0.6s ease; }
 .project-card:hover .project-image-wrap img { transform: scale(1.05); }
-.project-info { padding: 30px; display: flex; flex-direction: column; flex: 1; }
+
+.project-content-wrap { display: flex; flex-direction: column; flex: 1; }
+.project-info { padding: 24px 24px 0 24px; display: flex; flex-direction: column; flex: 1; }
 .project-location { font-family: var(--font-mono); font-size: 13px; color: var(--yellow); letter-spacing: 2px; margin-bottom: 12px; text-transform: uppercase; }
 .project-client { font-family: var(--font-display); font-size: 32px; color: var(--white); margin-bottom: 14px; transition: color 0.3s; line-height: 1; }
 .project-card:hover .project-client { color: var(--cyan); }
 .project-desc { font-size: 15px; color: rgba(255, 255, 255, 0.65); line-height: 1.6; }
 
+.whatsapp-btn-full { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: auto; background: #25D366; color: white; padding: 16px 20px; width: 100%; font-weight: 600; font-size: 16px; transition: background-color 0.3s; text-decoration: none; border-radius: 0; }
+.whatsapp-btn-full:hover { background: #20bd5c; }
+
 @media (min-width: 900px) {
-  .project-card.featured { grid-column: span 2; flex-direction: row; }
-  .project-card.featured .project-image-wrap { aspect-ratio: 3/4; flex: 1.2; }
-  .project-card.featured .project-info { flex: 1; justify-content: center; padding: 40px; }
-  .project-card.featured .project-client { font-size: 44px; margin-bottom: 20px; }
+  .project-card.featured { grid-column: span 2; flex-direction: row-reverse; }
+  .project-card.featured .project-image-wrap { aspect-ratio: 16/9; flex: 1.2; }
+  .project-card.featured .project-content-wrap { flex: 1; justify-content: space-between; }
+  .project-card.featured .project-info { justify-content: center; padding: 40px; }
+  .project-card.featured .project-client { font-size: 44px; margin-bottom: 20px; text-shadow: none; }
+  .project-card.featured .whatsapp-btn-full { font-size: 18px; padding: 22px 20px; }
 }
 @media (max-width: 900px) {
   .project-card.featured { grid-column: span 1; flex-direction: column; }

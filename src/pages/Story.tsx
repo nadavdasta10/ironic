@@ -262,11 +262,16 @@ export default function Story() {
               <h3 className="value-title">Built Tough</h3>
               <p className="value-desc">פח תעשייתי שנועד להחזיק 200 ליטר בלחץ. אם זה שרד עשור של דלק, זה ישרוד עשרים שנה של בירה.</p>
             </div>
-            <div className="value-card">
-              <div className="value-icon">✱</div>
-              <h3 className="value-title">Your Brand</h3>
-              <p className="value-desc">כל חבית יכולה לשאת את הלוגו שלכם. המותג שלכם על הברזל, לנצח.</p>
-            </div>
+              <div className="value-card featured-value-card">
+                <div className="value-card-content">
+                  <div className="value-icon">✱</div>
+                  <h3 className="value-title">Your Brand</h3>
+                  <p className="value-desc">כל חבית יכולה לשאת את הלוגו שלכם. המותג שלכם על הברזל, לנצח.</p>
+                </div>
+                <div className="value-card-image">
+                  <img src="/coca-cola-set.jpg" alt="Muted coca cola barrel" />
+                </div>
+              </div>
           </div>
         </div>
       </RevealSection>

@@ -25,7 +25,17 @@ function RevealSection({ children, className = '', style = {} }: { children: Rea
   );
 }
 
-const CUSTOM_ARTS = [
+type CustomArt = {
+  id: number;
+  title: string;
+  material: string;
+  desc: string;
+  image: string;
+  message: string;
+  isFeatured?: boolean;
+};
+
+const CUSTOM_ARTS: CustomArt[] = [
   { 
     id: 1, 
     title: 'דמות צמה בעבודת יד', 
@@ -85,25 +95,26 @@ export default function Projects() {
         <RevealSection>
           <div className="projects-grid">
             {CUSTOM_ARTS.map(art => (
-              <div className="project-card" key={art.id} style={{ display: 'flex', flexDirection: 'column', padding: '0', overflow: 'hidden' }}>
+              <div className={`project-card ${art.isFeatured ? 'featured' : ''}`} key={art.id}>
                 <div className="project-image-wrap">
                   <img src={`/${art.image}`} alt={art.title} style={{ objectPosition: 'center 20%' }} />
                 </div>
-                <div className="project-info" style={{ flex: 1, padding: '24px 24px 0 24px' }}>
-                  <div className="project-location" style={{ color: 'var(--cyan)' }}>{art.material}</div>
-                  <h3 className="project-client">{art.title}</h3>
-                  <p className="project-desc">{art.desc}</p>
+                <div className="project-content-wrap">
+                  <div className="project-info">
+                    <div className="project-location" style={{ color: 'var(--cyan)' }}>{art.material}</div>
+                    <h3 className="project-client">{art.title}</h3>
+                    <p className="project-desc">{art.desc}</p>
+                  </div>
+                  <a 
+                    href={`https://wa.me/${phoneNumber}?text=${encodeURIComponent(art.message)}`} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="whatsapp-btn-full"
+                  >
+                    <WhatsAppIcon />
+                    להזמנה אישית
+                  </a>
                 </div>
-                <a 
-                  href={`https://wa.me/${phoneNumber}?text=${encodeURIComponent(art.message)}`} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 mt-auto bg-[#25D366] text-white px-5 py-4 w-full font-semibold text-base hover:bg-[#20bd5c] transition-colors"
-                  style={{ textDecoration: 'none' }}
-                >
-                  <WhatsAppIcon />
-                  להזמנה אישית
-                </a>
               </div>
             ))}
           </div>

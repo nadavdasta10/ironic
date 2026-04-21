@@ -4,6 +4,7 @@ import { collection, onSnapshot, query, orderBy } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
+import { POSTS } from '../data/blog';
 
 function RevealSection({ children, className = '', style = {} }: { children: ReactNode; className?: string; style?: CSSProperties }) {
   const ref = useRef<HTMLElement>(null);
@@ -27,73 +28,6 @@ function RevealSection({ children, className = '', style = {} }: { children: Rea
   );
 }
 
-const POSTS = [
-  { 
-    id: 1, 
-    title: 'איך אנחנו מצילים חביות מפסולת?', 
-    tag: '// קיימות', 
-    excerpt: 'המסע של חבית מתחילה מערמות הברזל בחצרות מפעלים ועד למוצר המוגמר שמגיע לבר שלכם.', 
-    date: '12 באפריל, 2026', 
-    seed: 'factory' 
-  },
-  { 
-    id: 2, 
-    title: 'פסיכולוגיה של צבע: למה ורוד?', 
-    tag: '// עיצוב ותכנון', 
-    excerpt: 'בחירת הצבעים שלנו לא מקרית. איך צבעים בוהקים משפיעים על אווירה, צריכת אלכוהול וצילום רשתות חברתיות.', 
-    date: '8 באפריל, 2026', 
-    seed: 'neon' 
-  },
-  { 
-    id: 3, 
-    title: 'הטרנדים החמים למועדונים', 
-    tag: '// תעשייה', 
-    excerpt: 'מה נראה יותר השנה בברים המובילים בשוק? קווים גסים, תאורת ניאון, ואפס פשרות על איכות.', 
-    date: '30 במרץ, 2026', 
-    seed: 'club' 
-  },
-  { 
-    id: 4, 
-    title: 'מאחורי הקלעים: סדנת העבודה', 
-    tag: '// אותנטיות', 
-    excerpt: 'רעש דיסק אל קול ריתוך. מבט בלעדי אל תוך בית המלאכה שבו כל הקסם והלכלוך קורה בפועל.', 
-    date: '22 במרץ, 2026', 
-    seed: 'welding' 
-  },
-  { 
-    id: 5, 
-    title: 'אירוניה תעשייתית: סיפור המוצר ה-1', 
-    tag: '// ההתחלה', 
-    excerpt: 'איך סט כיסאות שנוצר בכלל למרפסת שלנו הפך לסט הראשון שייצרנו עבור לקוח.', 
-    date: '15 במרץ, 2026', 
-    seed: 'barrel' 
-  },
-  { 
-    id: 6, 
-    title: 'עיצוב שעובד קשה: למה ברזל?', 
-    tag: '// חומרים', 
-    excerpt: 'ריהוט לבר סופג מכות הולך להיהרס? לא אם הוא נבנה מהחומרים הנכונים מראש.', 
-    date: '1 במרץ, 2026', 
-    seed: 'metal' 
-  },
-  { 
-    id: 7, 
-    title: 'תאורה וברזל: השילוב המושלם', 
-    tag: '// עיצוב חלל', 
-    excerpt: 'איך משלבים תאורת לד נסתרת בתוך הריהוט התעשייתי שלנו ליצירת אווירה פסיכדלית ללקוחות במועדון.', 
-    date: '28 בפברואר, 2026', 
-    seed: 'led-lights' 
-  },
-  { 
-    id: 8, 
-    title: 'ריהוט חוץ מול פנים: מה באמת ההבדל?', 
-    tag: '// מדריך פרקטי', 
-    excerpt: 'חביות דלק נועדו לתנאי שטח קשים, אבל איך אנחנו מוודאים שהצבע יישאר בוהק ושלם גם אחרי חורף ושמש ישראלית קשה?', 
-    date: '12 בפברואר, 2026', 
-    seed: 'outdoor-bar' 
-  }
-];
-
 export default function Blog() {
   const [dbPosts, setDbPosts] = useState<any[]>([]);
 
@@ -110,8 +44,8 @@ export default function Blog() {
     return () => unsub();
   }, []);
 
-  // Use database posts if available, otherwise fallback to local hardcoded mock
-  const postsToRender = dbPosts.length > 0 ? dbPosts : POSTS;
+  // Render local POSTS explicitly for now as requested with the new images and content.
+  const postsToRender = POSTS;
 
   return (
     <>
@@ -129,9 +63,9 @@ export default function Blog() {
         {/* FEATURED POST */}
         <RevealSection>
           {postsToRender.length > 0 && (
-            <Link to="#" className="featured-post">
+            <Link to={`/blog/${postsToRender[0].id}`} className="featured-post">
               <div className="featured-image">
-                <img src={postsToRender[0].image ? postsToRender[0].image : `https://picsum.photos/seed/${postsToRender[0].seed || 'industrial'}/1000/800`} alt="Featured Article" />
+                <img src={postsToRender[0].image ? `/${postsToRender[0].image}` : `https://picsum.photos/seed/${postsToRender[0].seed || 'industrial'}/1000/800`} alt={postsToRender[0].title} />
               </div>
               <div className="featured-content">
                 <div className="blog-tag">{postsToRender[0].tag || '// מומלץ החודש'}</div>
@@ -139,7 +73,7 @@ export default function Blog() {
                 <p className="blog-excerpt">{postsToRender[0].excerpt}</p>
                 <div className="blog-meta">
                   <span className="blog-date">{postsToRender[0].date}</span>
-                  <span className="blog-read-more">קרא עוד</span>
+                  <span className="blog-read-more">לחץ כאן למאמר המלא ←</span>
                 </div>
               </div>
             </Link>
@@ -151,9 +85,9 @@ export default function Blog() {
           <div className="section-label" style={{ textAlign: 'right' }}>// ALL ARCHIVES</div>
           <div className="blog-grid">
             {postsToRender.slice(1).map(post => (
-              <Link to="#" className="blog-card" key={post.id} style={{ display: 'flex' }}>
+              <Link to={`/blog/${post.id}`} className="blog-card" key={post.id} style={{ display: 'flex' }}>
                 <div className="blog-card-image">
-                  <img src={post.image ? post.image : `https://picsum.photos/seed/${post.seed || 'factory'}/600/400`} alt={post.title} />
+                  <img src={post.image ? `/${post.image}` : `https://picsum.photos/seed/${post.seed || 'factory'}/600/400`} alt={post.title} />
                 </div>
                 <div className="blog-card-content">
                   <div className="blog-tag">{post.tag}</div>
@@ -161,7 +95,7 @@ export default function Blog() {
                   <p className="blog-card-excerpt">{post.excerpt}</p>
                   <div className="blog-meta">
                     <span className="blog-date">{post.date}</span>
-                    <span className="blog-read-more">קרא עוד</span>
+                    <span className="blog-read-more">קרא עוד ←</span>
                   </div>
                 </div>
               </Link>
@@ -177,7 +111,7 @@ export default function Blog() {
            <p className="cta-desc">בחר צבע. העלה לוגו. קבל סט שנועד להיות מצולם.</p>
            <div className="cta-buttons">
              <Link to="/product" className="btn-primary">אל החנות ←</Link>
-             <a href="#" className="btn-ghost">יש לי פרויקט מיוחד</a>
+             <Link to="/contact" className="btn-ghost">יש לי פרויקט מיוחד</Link>
            </div>
          </div>
        </section>
