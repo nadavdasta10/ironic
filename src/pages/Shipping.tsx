@@ -1,9 +1,11 @@
 import React from 'react';
 import Footer from '../components/Footer';
+import Navbar from '../components/Navbar';
 
 export default function Shipping() {
   return (
     <>
+      <Navbar />
       <main className="legal-main">
         <div className="legal-container">
           <h1 className="legal-title">מדיניות משלוחים</h1>

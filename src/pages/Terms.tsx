@@ -1,9 +1,11 @@
 import React from 'react';
 import Footer from '../components/Footer';
+import Navbar from '../components/Navbar';
 
 export default function Terms() {
   return (
     <>
+      <Navbar />
       <main className="legal-main">
         <div className="legal-container">
           <h1 className="legal-title">תקנון ותנאי שימוש</h1>

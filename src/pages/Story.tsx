@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState, CSSProperties, ReactNode } from 'react';
 import { Link } from 'react-router-dom';
+import { Search, Droplets, Zap, Hammer, Paintbrush } from 'lucide-react';
 
 function StatCounter({ target, suffix = '', text = '' }: { target?: number; suffix?: string; text?: string }) {
   const [count, setCount] = useState(0);
@@ -93,12 +94,22 @@ export default function Story() {
       {/* STORY PART 2 */}
       <RevealSection style={{ paddingTop: '40px' }}>
         <div className="section-inner">
-          <div className="story-section">
-            <div className="section-label">// THE DISCOVERY</div>
-            <h2 className="section-title">ואז ראינו את<br /><span className="cyan">החביות.</span></h2>
-            <p>במוסך של חבר, על ערימת פסולת בנמל אשדוד, מאחורי מפעל בנתניה. חביות דלק תעשייתיות בגודל מלא, פח איכותי בעובי מכובד, מחכות שיגררו אותן לגריסה. זבל.</p>
-            <p>היינו יכולים להשאיר את זה שם. אבל כשהסתכלנו על החבית הזאת, ראינו משהו אחר: <span className="highlight-cyan">שולחן בר</span>. <span className="highlight-cyan">גב של כיסא</span>. קונטור שאף מפעל בעולם לא מעצב – כי אין לו את היכולת לעצב בייצור המוני עקומות של חבית תעשייתית בלי להתחיל מאפס.</p>
-            <p>החבית הזו נוצרה להחזיק 200 ליטר דלק בלחץ תעשייתי. היא עשויה מפח שעומד בטמפרטורות קיצוניות, הרעדות, שנים של שמש ישירה. מה שהיא יודעת לעשות הכי טוב – היא לעמוד. איזה חומר יותר טוב מזה לריהוט בר פעיל?</p>
+          <div className="story-split-container">
+            <div className="story-split-text story-section" style={{ margin: 0 }}>
+              <div className="section-label">// THE DISCOVERY</div>
+              <h2 className="section-title">מהמסך למציאות –<br /><span className="cyan">הסיפור שמאחורי החבית.</span></h2>
+              <p>זה התחיל כשנתקלנו בתמונות ברחבי הרשת – עיצובים תעשייתיים שהפכו חביות דלק ישנות לרהיטי יוקרה בערים כמו ברלין וניו יורק. נדלקנו על הקונספט, אבל ידענו שאנחנו רוצים לעשות את זה בדרך שלנו: יותר חזק, יותר אותנטי, ויותר ישראלי.</p>
+              <p>יצאנו לחפש את חומרי הגלם הכי טובים שיש. מצאנו אותם במוסך של חבר, על ערימת פסולת בנמל אשדוד, ומאחורי מפעלים בנתניה. חביות דלק תעשייתיות בגודל מלא, עשויות פח איכותי בעובי מכובד, שפשוט חיכו לגריסה. עבור אחרים זה היה זבל, <span className="highlight">עבורנו זו הייתה הזדמנות ליצירה.</span></p>
+              <p>החבית הזו נוצרה במקור להחזיק 200 ליטר דלק בלחץ תעשייתי ולשרוד שנים של שמש ישירה וטלטולים. הקימורים שלה (הקונטור) הם כאלו שאף מפעל רהיטים לא יכול לעצב בייצור המוני מבלי להתחיל מאפס. לקחנו את העמידות הבלתי מתפשרת הזו והפכנו אותה לסט בר מעוצב – שילוב מושלם בין השראה בינלאומית לחוזק תעשייתי כחול-לבן.</p>
+            </div>
+            <div className="story-split-visuals">
+              <div className="showcase-wrapper">
+                <div className="single-showcase">
+                  <img src="/naked-barrel.jpg" alt="Naked Barrel" className="showcase-img" />
+                </div>
+                <div className="showcase-floating-title">ככה מתחיל התהליך</div>
+              </div>
+            </div>
           </div>
         </div>
       </RevealSection>
@@ -121,31 +132,93 @@ export default function Story() {
         <div className="section-inner">
           <div className="section-label">// THE PROCESS</div>
           <h2 className="section-title">מחבית ל<span className="pink">סט</span>.<br />5 שלבים, כמה ימים.</h2>
-          <div className="stages-grid">
-            <div className="stage-card">
-              <div className="stage-number">01</div>
-              <div className="stage-title">גיוס</div>
-              <div className="stage-desc">מאתרים חביות תעשייתיות במפעלים, נמלים, ומוסכים. בוחרים רק את אלה שעוד שלמות מבפנים.</div>
+          
+          <div className="story-split-container" style={{ margin: '80px 0' }}>
+            <div className="story-split-visuals">
+              <div style={{ position: 'relative', width: '100%', maxWidth: '500px', margin: '0 auto', aspectRatio: '4/3', borderRadius: '20px', overflow: 'hidden', boxShadow: '0 30px 60px rgba(255, 0, 128, 0.3)' }}>
+                <img src="/cutting.jpg" alt="Laser Cutting" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <div style={{ position: 'absolute', inset: 0, boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.1)', borderRadius: '20px', pointerEvents: 'none' }}></div>
+              </div>
             </div>
-            <div className="stage-card">
-              <div className="stage-number">02</div>
-              <div className="stage-title">ניקוי</div>
-              <div className="stage-desc">ניקוי כימי מלא לשאריות דלק, הסרת צבע ישן, והכנה לחיתוך. בלי זה אין ריתוך נקי.</div>
+            <div className="story-split-text story-section" style={{ margin: 0, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+              <h3 style={{ fontSize: 'clamp(40px, 5vw, 60px)', fontFamily: 'var(--font-display)', marginBottom: '24px', lineHeight: 1, letterSpacing: '-1px' }}>
+                <span className="gradient-text">אמנות</span><br/>המיחזור.
+              </h3>
+              <p style={{ fontSize: '20px', color: 'rgba(255, 255, 255, 0.9)', margin: 0 }}>
+                כל חבית שאנחנו בוחרים עוברת תהליך קפדני של ניקוי, חיתוך בלייזר, שיוף וצביעה בתנור. אנחנו לא רק בונים רהיטים - אנחנו יוצרים פריטי אספנות שיחזיקו מעמד לדורות.
+              </p>
             </div>
-            <div className="stage-card">
-              <div className="stage-number">03</div>
-              <div className="stage-title">חיתוך</div>
-              <div className="stage-desc">חיתוך ידני של החבית – שולחן מלמעלה, 2 כיסאות מהצדדים. כל חבית נחתכת בעבודת יד בדיוק של מילימטרים.</div>
+          </div>
+
+          <div className="snake-process hidden lg:block" dir="rtl">
+            <div className="snake-row snake-row-1">
+              <div className="snake-node">
+                <div className="snake-icon"><Search size={36} /></div>
+                <div className="snake-title">גיוס</div>
+                <div className="snake-desc">מאתרים חביות תעשייתיות במפעלים, נמלים, ומוסכים. בוחרים רק את אלה שעוד שלמות מבפנים.</div>
+              </div>
+              <div className="snake-node">
+                <div className="snake-icon"><Droplets size={36} /></div>
+                <div className="snake-title">ניקוי</div>
+                <div className="snake-desc">ניקוי כימי מלא לשאריות דלק, הסרת צבע ישן, והכנה לחיתוך. בלי זה אין ריתוך נקי.</div>
+              </div>
+              <div className="snake-node">
+                <div className="snake-icon"><Zap size={36} /></div>
+                <div className="snake-title">חיתוך</div>
+                <div className="snake-desc">חיתוך ידני של החבית – שולחן מלמעלה, 2 כיסאות מהצדדים. כל חבית נחתכת בדיוק של מילימטרים.</div>
+              </div>
             </div>
-            <div className="stage-card">
-              <div className="stage-number">04</div>
-              <div className="stage-title">ריתוך</div>
-              <div className="stage-desc">הוספת רגליים, מושבים, משענות. ריתוך תעשייתי חזק שמחזיק עמידה בבר פעיל שנים.</div>
+            
+            <div className="snake-row snake-row-2">
+              <div className="snake-node empty"></div>
+              <div className="snake-node">
+                <div className="snake-icon"><Paintbrush size={36} /></div>
+                <div className="snake-title">צביעה</div>
+                <div className="snake-desc">ציפוי אבקה בתנור בטמפרטורה של 200°C. צבע שעומד בשוליים רטובים, מכות ושמש.</div>
+              </div>
+              <div className="snake-node">
+                <div className="snake-icon"><Hammer size={36} /></div>
+                <div className="snake-title">ריתוך</div>
+                <div className="snake-desc">הוספת רגליים, מושבים, משענות. ריתוך תעשייתי חזק שמחזיק עמידה בבר פעיל שנים.</div>
+              </div>
             </div>
-            <div className="stage-card">
-              <div className="stage-number">05</div>
-              <div className="stage-title">צביעה</div>
-              <div className="stage-desc">ציפוי אבקה בתנור בטמפרטורה של 200°C. צבע שעומד בשוליים רטובים, מכות, שמש, וכל מה שבר פעיל יכול לזרוק עליו.</div>
+          </div>
+
+          <div className="snake-mobile lg:hidden" dir="rtl">
+            <div className="snake-m-node">
+              <div className="snake-m-icon"><Search size={32} /></div>
+              <div className="snake-m-content">
+                <div className="snake-title">גיוס</div>
+                <div className="snake-desc">מאתרים חביות תעשייתיות במפעלים, נמלים, ומוסכים. בוחרים רק את אלה שעוד שלמות מבפנים.</div>
+              </div>
+            </div>
+            <div className="snake-m-node">
+              <div className="snake-m-icon"><Droplets size={32} /></div>
+              <div className="snake-m-content">
+                <div className="snake-title">ניקוי</div>
+                <div className="snake-desc">ניקוי כימי מלא לשאריות דלק, הסרת צבע ישן, והכנה לחיתוך. בלי זה אין ריתוך נקי.</div>
+              </div>
+            </div>
+            <div className="snake-m-node">
+              <div className="snake-m-icon"><Zap size={32} /></div>
+              <div className="snake-m-content">
+                <div className="snake-title">חיתוך</div>
+                <div className="snake-desc">חיתוך ידני של החבית – שולחן מלמעלה, 2 כיסאות מהצדדים. כל חבית נחתכת בדיוק של מילימטרים.</div>
+              </div>
+            </div>
+            <div className="snake-m-node">
+              <div className="snake-m-icon"><Hammer size={32} /></div>
+              <div className="snake-m-content">
+                <div className="snake-title">ריתוך</div>
+                <div className="snake-desc">הוספת רגליים, מושבים, משענות. ריתוך תעשייתי חזק שמחזיק עמידה בבר פעיל שנים.</div>
+              </div>
+            </div>
+            <div className="snake-m-node">
+              <div className="snake-m-icon"><Paintbrush size={32} /></div>
+              <div className="snake-m-content">
+                <div className="snake-title">צביעה</div>
+                <div className="snake-desc">ציפוי אבקה בתנור בטמפרטורה של 200°C. צבע שעומד בשוליים רטובים, מכות ושמש.</div>
+              </div>
             </div>
           </div>
         </div>
@@ -207,35 +280,17 @@ export default function Story() {
         </div>
       </RevealSection>
 
-      {/* GALLERY / WORKSHOP VIBE */}
-      <RevealSection className="gallery-section">
+      {/* THE RESULTS / PRODUCT SHOTS */}
+      <RevealSection style={{ padding: '100px 40px', background: 'var(--deep)' }}>
         <div className="section-inner">
-          <div className="section-label">// FROM THE WORKSHOP</div>
-          <h2 className="section-title">מה קורה אצלנו<br /><span className="yellow">בסדנה.</span></h2>
-          <div className="gallery-grid">
-            <div className="gallery-item">
-              <span className="gallery-icon">🛢️</span>
-              <span className="gallery-caption">RAW BARREL</span>
+          <div className="section-label" style={{ textAlign: 'center' }}>// THE RESULT</div>
+          <h2 className="section-title" style={{ textAlign: 'center' }}>איך זה נראה<br /><span className="cyan">במציאות.</span></h2>
+          <div className="story-collage" style={{ marginTop: '60px' }}>
+            <div className="story-circle-wrapper">
+              <img src="/product-blue.jpg" alt="Blue Barrel Set" className="story-circle-img" />
             </div>
-            <div className="gallery-item">
-              <span className="gallery-icon">🔥</span>
-              <span className="gallery-caption">CUTTING</span>
-            </div>
-            <div className="gallery-item">
-              <span className="gallery-icon">⚡</span>
-              <span className="gallery-caption">WELDING</span>
-            </div>
-            <div className="gallery-item">
-              <span className="gallery-icon">🎨</span>
-              <span className="gallery-caption">PAINTING</span>
-            </div>
-            <div className="gallery-item">
-              <span className="gallery-icon">✨</span>
-              <span className="gallery-caption">FINISHING</span>
-            </div>
-            <div className="gallery-item">
-              <span className="gallery-icon">🚚</span>
-              <span className="gallery-caption">DELIVERY</span>
+            <div className="story-circle-wrapper pink-theme">
+              <img src="/product-green.jpg" alt="Green Barrel Set" className="story-circle-img" />
             </div>
           </div>
         </div>
