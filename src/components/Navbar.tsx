@@ -11,7 +11,10 @@ export default function Navbar() {
   return (
     <>
       <nav className={isProductPage ? 'sticky-nav' : ''}>
-        <Link to="/" className="logo">ironic</Link>
+        <Link to="/" className="logo-container">
+          <div className="logo">ironic</div>
+          <div className="logo-design">design</div>
+        </Link>
         
         {/* Desktop Breadcrumb for product, or standard menu otherwise */}
         {!isProductPage ? (

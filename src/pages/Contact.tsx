@@ -63,7 +63,7 @@ export default function Contact() {
                 <div className="info-icon">📍</div>
                 <div>
                   <h4>הסטודיו שלנו</h4>
-                  <p>רחוב המלאכה 14, תל אביב</p>
+                  <p>איזור תעשייה מעלה שומרון</p>
                 </div>
               </div>
               <div className="info-item">
@@ -77,7 +77,7 @@ export default function Contact() {
                 <div className="info-icon">✉️</div>
                 <div>
                   <h4>אימייל</h4>
-                  <p>hello@ironic.co.il</p>
+                  <p>Support@ironic.co.il</p>
                 </div>
               </div>
             </div>

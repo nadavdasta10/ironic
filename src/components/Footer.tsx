@@ -11,7 +11,7 @@ export default function Footer() {
         <Link to="/returns">מדיניות ביטולים והחזרות</Link>
       </div>
       <div className="footer-copyright">
-        © {new Date().getFullYear()} ironic · בית מלאכה ישראלי · כל הזכויות שמורות
+        © {new Date().getFullYear()} ironic design · בית מלאכה ישראלי · כל הזכויות שמורות
       </div>
     </footer>
   );
