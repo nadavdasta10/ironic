@@ -77,11 +77,10 @@ export default function Product() {
   const placeholderColor = isLight ? 'rgba(0,0,0,0.5)' : 'rgba(255,255,255,0.4)';
   const placeholderBorder = isLight ? 'rgba(0,0,0,0.3)' : 'rgba(255,255,255,0.2)';
 
-  const currentImageSrc = color.hex === '#EA580C' ? '/orange-set.jpg' :
-                          color.hex === '#111111' ? '/black-set.jpg' :
-                          color.hex === '#FFFFFF' ? '/white-set.jpg' :
-                          color.hex === '#DC2626' ? '/coca-cola-set.jpg' :
-                          '/cream-set.jpg';
+  const currentImageSrc = color.hex === '#DC2626' ? '/coca-cola-set.jpg' :
+                          color.hex === '#00F0FF' ? '/product-blue.jpg' :
+                          color.hex === '#16a34a' ? '/product-green.jpg' :
+                          '/naked-barrel.jpg';
 
   useEffect(() => {
     setImageLoading(true);
@@ -217,14 +216,7 @@ export default function Product() {
                     transition: 'opacity 0.4s ease'
                   }} 
                   onLoad={() => setImageLoading(false)}
-                  onError={(e) => {
-                    const target = e.currentTarget;
-                    if (!target.src.includes('picsum')) {
-                      target.src = color.hex === '#DC2626' ? 'https://picsum.photos/seed/cocacola/600/800' : `https://picsum.photos/seed/barrel-${color.hex.replace('#','')}/600/800`;
-                    } else {
-                      setImageLoading(false);
-                    }
-                  }}
+                  onError={() => setImageLoading(false)}
                 />
                 
                 {imageLoading && (
