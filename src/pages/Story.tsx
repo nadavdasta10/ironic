@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState, CSSProperties, ReactNode } from 'react';
 import { Link } from 'react-router-dom';
-import { Search, Droplets, Zap, Hammer, Paintbrush } from 'lucide-react';
+import { Search, Droplets, Zap, Flame, Paintbrush } from 'lucide-react';
 
 function StatCounter({ target, suffix = '', text = '' }: { target?: number; suffix?: string; text?: string }) {
   const [count, setCount] = useState(0);
@@ -83,9 +83,10 @@ export default function Story() {
           <div className="story-section">
             <div className="section-label">// THE QUESTION</div>
             <h2 className="section-title">התחלנו עם<br /><span className="pink">שאלה אחת.</span></h2>
-            <p className="lead">למה ריהוט של מקומות בילוי נראה תמיד אותו דבר?</p>
-            <p>אותם שולחנות עץ תעשייתיים, אותם כיסאות מתכת מהסיטונאי, אותו רושם שנשכח ברגע שיוצאים מהמקום. בעולם שבו כל בר חדש מנסה להיות <span className="highlight">"המקום"</span>, הריהוט הוא הדבר הכי שכחוני שיש.</p>
-            <p>בעל בר שפותח מקום חדש משקיע חצי מיליון שקלים בעיצוב, מיתוג, תאורה, תפריט. ואז שם בפנים 20 כיסאות זהים שאפשר למצוא בכל בר אחר בעיר. הפרט הכי נראה, זה שאנשים מחזיקים בידיים שלהם שעות – הוא הפרט שמעצבים מוותרים עליו.</p>
+            <p className="lead">למה כל מקומות הבילוי נראים אותו דבר?</p>
+            <p>אותם שולחנות עץ "תעשייתיים", אותם כיסאות מתכת מהקטלוג, אותה תחושה שנעלמת בשנייה שיוצאים מהדלת. כולם רוצים להיות "המקום" הבא בעיר, אבל בסוף נראים כמו עוד אחד ברשימה.</p>
+            <p>בעל מקום משקיע מאות אלפי שקלים בעיצוב, מיתוג, תאורה ותפריט. חושב על כל פרט קטן. ואז מגיע לדבר הכי בסיסי — ובוחר את אותם כיסאות שיש בכל מקום בילוי אחר.</p>
+            <p>הפרט שאנשים יושבים עליו שעות, נוגעים בו, חווים אותו באמת. וכשזה גנרי — גם הזיכרון מהמקום נשאר שטחי ולא באמת נתפס.</p>
             <div className="pull-quote">זה לא הגיוני. ריהוט הוא לא דקורציה, הוא חלק מהחוויה.</div>
           </div>
         </div>
@@ -150,36 +151,52 @@ export default function Story() {
             </div>
           </div>
 
-          <div className="snake-process hidden lg:block" dir="rtl">
-            <div className="snake-row snake-row-1">
-              <div className="snake-node">
-                <div className="snake-icon"><Search size={36} /></div>
-                <div className="snake-title">גיוס</div>
-                <div className="snake-desc">מאתרים חביות תעשייתיות במפעלים, נמלים, ומוסכים. בוחרים רק את אלה שעוד שלמות מבפנים.</div>
+          <div className="hz-process hidden lg:block" dir="rtl">
+            <div className="hz-line"></div>
+            <div className="hz-grid">
+              {/* Step 1 */}
+              <div className="hz-node top">
+                <div className="hz-content">
+                  <div className="hz-title">גיוס</div>
+                  <div className="hz-desc">מאתרים חביות תעשייתיות במפעלים, נמלים, ומוסכים. בוחרים רק את אלה שעוד שלמות מבפנים.</div>
+                </div>
+                <div className="hz-icon"><Search size={34} /></div>
               </div>
-              <div className="snake-node">
-                <div className="snake-icon"><Droplets size={36} /></div>
-                <div className="snake-title">ניקוי</div>
-                <div className="snake-desc">ניקוי כימי מלא לשאריות דלק, הסרת צבע ישן, והכנה לחיתוך. בלי זה אין ריתוך נקי.</div>
+              
+              {/* Step 2 */}
+              <div className="hz-node bottom">
+                <div className="hz-icon"><Droplets size={34} /></div>
+                <div className="hz-content">
+                  <div className="hz-title">ניקוי</div>
+                  <div className="hz-desc">ניקוי כימי מלא לשאריות דלק, הסרת צבע ישן, והכנה לחיתוך. בלי זה אין ריתוך נקי.</div>
+                </div>
               </div>
-              <div className="snake-node">
-                <div className="snake-icon"><Zap size={36} /></div>
-                <div className="snake-title">חיתוך</div>
-                <div className="snake-desc">חיתוך ידני של החבית – שולחן מלמעלה, 2 כיסאות מהצדדים. כל חבית נחתכת בדיוק של מילימטרים.</div>
+              
+              {/* Step 3 */}
+              <div className="hz-node top">
+                <div className="hz-content">
+                  <div className="hz-title">חיתוך</div>
+                  <div className="hz-desc">חיתוך ידני של החבית – שולחן מלמעלה, 2 כיסאות מהצדדים. כל חבית נחתכת בדיוק של מילימטרים.</div>
+                </div>
+                <div className="hz-icon"><Zap size={34} /></div>
               </div>
-            </div>
-            
-            <div className="snake-row snake-row-2">
-              <div className="snake-node empty"></div>
-              <div className="snake-node">
-                <div className="snake-icon"><Paintbrush size={36} /></div>
-                <div className="snake-title">צביעה</div>
-                <div className="snake-desc">ציפוי אבקה בתנור בטמפרטורה של 200°C. צבע שעומד בשוליים רטובים, מכות ושמש.</div>
+              
+              {/* Step 4 */}
+              <div className="hz-node bottom">
+                <div className="hz-icon"><Flame size={34} /></div>
+                <div className="hz-content">
+                  <div className="hz-title">ריתוך</div>
+                  <div className="hz-desc">הוספת רגליים, מושבים, משענות. ריתוך תעשייתי חזק שמחזיק עמידה בבר פעיל שנים.</div>
+                </div>
               </div>
-              <div className="snake-node">
-                <div className="snake-icon"><Hammer size={36} /></div>
-                <div className="snake-title">ריתוך</div>
-                <div className="snake-desc">הוספת רגליים, מושבים, משענות. ריתוך תעשייתי חזק שמחזיק עמידה בבר פעיל שנים.</div>
+              
+              {/* Step 5 */}
+              <div className="hz-node top">
+                <div className="hz-content">
+                  <div className="hz-title">צביעה</div>
+                  <div className="hz-desc">ציפוי אבקה בתנור בטמפרטורה של 200°C. צבע שעומד בשוליים רטובים, מכות ושמש.</div>
+                </div>
+                <div className="hz-icon"><Paintbrush size={34} /></div>
               </div>
             </div>
           </div>
@@ -207,7 +224,7 @@ export default function Story() {
               </div>
             </div>
             <div className="snake-m-node">
-              <div className="snake-m-icon"><Hammer size={32} /></div>
+              <div className="snake-m-icon"><Flame size={32} /></div>
               <div className="snake-m-content">
                 <div className="snake-title">ריתוך</div>
                 <div className="snake-desc">הוספת רגליים, מושבים, משענות. ריתוך תעשייתי חזק שמחזיק עמידה בבר פעיל שנים.</div>
@@ -238,7 +255,7 @@ export default function Story() {
             <div className="value-card">
               <div className="value-icon">!</div>
               <h3 className="value-title">Stand Out</h3>
-              <p className="value-desc">אם הלקוחות שלך לא מצלמים את הריהוט שלך, הוא עושה את העבודה שלו רע. הסטים שלנו נועדו להיות מצולמים.</p>
+              <p className="value-desc">אם הלקוחות שלכם לא מצלמים את הריהוט שלכם, הוא לא באמת עושה את העבודה. הסטים שלנו נועדו למשוך את העין ולהיות מצולמים.</p>
             </div>
             <div className="value-card">
               <div className="value-icon">+</div>
@@ -248,7 +265,7 @@ export default function Story() {
             <div className="value-card">
               <div className="value-icon">✱</div>
               <h3 className="value-title">Your Brand</h3>
-              <p className="value-desc">כל חבית יכולה לשאת את הלוגו שלך. המקום שלך על הברזל, לנצח.</p>
+              <p className="value-desc">כל חבית יכולה לשאת את הלוגו שלכם. המותג שלכם על הברזל, לנצח.</p>
             </div>
           </div>
         </div>
@@ -301,7 +318,7 @@ export default function Story() {
         <div className="founder-inner">
           <div className="section-label" style={{ marginBottom: '30px' }}>// FROM THE FOUNDER</div>
           <div className="founder-quote">
-            אנחנו לא מוכרים ריהוט. אנחנו מוכרים את הרגע שבו לקוח נכנס לבר שלך, רואה את הסט, ומוציא את הפלאפון.
+            אנחנו לא מוכרים ריהוט. אנחנו מוכרים את הרגע שבו לקוח נכנס לבר שלכם, רואה את הסט, ומוציא את הפלאפון.
           </div>
           <div className="founder-name">המייסדים של ironic</div>
           <div className="founder-title">בית מלאכה · ישראל</div>
@@ -311,8 +328,8 @@ export default function Story() {
       {/* CTA */}
       <section className="cta-section">
         <div className="cta-inner">
-          <h2 className="cta-title">מוכן לקבל<br />את שלך?</h2>
-          <p className="cta-desc">בחר צבע. העלה לוגו. קבל סט שנועד להיות מצולם.</p>
+          <h2 className="cta-title">מוכנים לקבל<br />את שלכם?</h2>
+          <p className="cta-desc">בחרו צבע. העלו לוגו. קבלו סט שנועד להיות מצולם.</p>
           <div className="cta-buttons">
             <Link to="/product" className="btn-primary">אל החנות ←</Link>
             <a href="#" className="btn-ghost">יש לי פרויקט מיוחד</a>

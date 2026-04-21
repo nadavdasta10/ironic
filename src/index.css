@@ -159,26 +159,28 @@ section { padding: 80px 40px; position: relative; z-index: 3; }
 .pull-quote::before { content: "\""; font-size: 60px; color: var(--pink); margin-left: 8px; opacity: 0.6; vertical-align: -15px; }
 .workshop-section { background: var(--deep-2); padding: 100px 40px; }
 
-/* SNAKE PROCESS DESKTOP */
-.snake-process { margin: 60px 0; padding: 0 20px; }
-.snake-row { display: flex; position: relative; padding-bottom: 80px; }
-.snake-row-2 { padding-bottom: 0; }
-.snake-node { flex: 1; text-align: center; position: relative; z-index: 2; padding: 0 15px; }
-.snake-node.empty { visibility: hidden; }
+/* HZ PROCESS DESKTOP (Horizontal Zigzag) */
+.hz-process { position: relative; margin: 120px auto; max-width: 1100px; padding: 0 20px; height: 350px; }
+.hz-line { position: absolute; top: 50%; left: 20px; right: 20px; height: 3px; background: linear-gradient(270deg, var(--cyan), var(--violet), var(--pink)); transform: translateY(-50%); z-index: 1; box-shadow: 0 0 15px rgba(255, 0, 128, 0.4); }
+.hz-grid { display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 2; height: 100%; }
+.hz-node { position: relative; display: flex; flex-direction: column; align-items: center; width: 20%; cursor: default; }
+.hz-icon { width: 80px; height: 80px; background: var(--deep); border: 2px solid var(--cyan); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--white); flex-shrink: 0; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 0 15px rgba(0, 240, 255, 0.1); }
+.hz-node:hover .hz-icon { background: var(--gradient); border-color: transparent; color: var(--deep); transform: scale(1.1); box-shadow: 0 0 25px rgba(255, 0, 128, 0.5); }
+.hz-node:hover .hz-icon svg { stroke-width: 2.5; }
 
-.snake-icon { width: 90px; height: 90px; margin: 0 auto 24px; border-radius: 50%; background: var(--deep); border: 2px solid var(--cyan); display: flex; align-items: center; justify-content: center; color: var(--white); box-shadow: 0 0 20px rgba(0, 240, 255, 0.1); position: relative; z-index: 3; transition: all 0.3s ease; }
-.snake-node:hover .snake-icon { background: var(--gradient); border-color: transparent; box-shadow: 0 0 30px rgba(255, 0, 128, 0.4); transform: scale(1.05); color: var(--deep); }
-.snake-node:hover .snake-icon svg { stroke-width: 2.5; }
+.hz-content { position: absolute; width: 240px; text-align: center; opacity: 0.85; transition: opacity 0.3s; }
+.hz-node:hover .hz-content { opacity: 1; }
+.hz-node.top .hz-content { bottom: 100px; }
+.hz-node.bottom .hz-content { top: 100px; }
 
-.snake-title { font-family: var(--font-display); font-size: 26px; color: var(--white); margin-bottom: 12px; }
-.snake-desc { font-size: 15px; color: rgba(255, 255, 255, 0.7); line-height: 1.5; max-width: 280px; margin: 0 auto; }
+.hz-title { font-family: var(--font-display); font-size: 28px; color: var(--white); margin-bottom: 8px; letter-spacing: 0.5px; }
+.hz-desc { font-size: 15px; color: rgba(255, 255, 255, 0.7); line-height: 1.5; margin: 0 auto; }
 
-/* Base line across row 1 */
-.snake-row-1::before { content: ""; position: absolute; top: 44px; right: 16.66%; left: 16.66%; height: 3px; background: linear-gradient(270deg, var(--pink) 0%, var(--violet) 50%, #00F0FF 100%); z-index: 1; box-shadow: 0 0 15px rgba(0, 240, 255, 0.4); }
-/* The curved turn */
-.snake-row-1::after { content: ""; position: absolute; top: 44px; left: calc(16.66% - 40px); width: 40px; height: 100%; border: 3px solid #00F0FF; border-right: none; border-radius: 40px 0 0 40px; z-index: 1; box-shadow: -4px 0 15px rgba(0, 240, 255, 0.3); }
-/* Base line across row 2 */
-.snake-row-2::before { content: ""; position: absolute; top: 44px; right: 50%; left: 16.66%; height: 3px; background: linear-gradient(90deg, var(--pink) 0%, #00F0FF 100%); z-index: 1; box-shadow: 0 0 15px rgba(255, 0, 128, 0.4); }
+/* Connecting vertical dash line from icon to text */
+.hz-node::before { content: ""; position: absolute; width: 2px; height: 20px; background: rgba(255,255,255,0.15); opacity: 0; transition: opacity 0.3s; }
+.hz-node:hover::before { opacity: 1; }
+.hz-node.top::before { bottom: 80px; }
+.hz-node.bottom::before { top: 80px; }
 
 /* SNAKE PROCESS MOBILE */
 .snake-mobile { position: relative; padding: 20px 0 20px 20px; margin: 40px 0; }
