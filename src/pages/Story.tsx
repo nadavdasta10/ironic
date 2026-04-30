@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState, CSSProperties, ReactNode } from 'react';
 import { Link } from 'react-router-dom';
-import { Search, Droplets, Zap, Flame, Paintbrush } from 'lucide-react';
+import { Search, Droplets, Zap, Flame, Paintbrush, ChevronRight, ChevronLeft } from 'lucide-react';
 
 function StatCounter({ target, suffix = '', text = '' }: { target?: number; suffix?: string; text?: string }) {
   const [count, setCount] = useState(0);
@@ -64,16 +64,64 @@ import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 
 export default function Story() {
+  const heroImages = [
+    '/selfi-naked-bar-orange.jpeg',
+    '/photo.png',
+    '/naked-turkiz.jpeg',
+    '/bar-sitting-women.png',
+    '/bar-naked-grey.jpeg'
+  ];
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % heroImages.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [heroImages.length]);
+
+  const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % heroImages.length);
+  const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + heroImages.length) % heroImages.length);
+
   return (
     <>
       <Navbar />
 
       {/* HERO */}
-      <section className="hero">
-        <div className="hero-content">
-          <div className="hero-tag">// OUR STORY</div>
-          <h1>trash to<br />table.</h1>
-          <p>איך התחלנו עם ערימת חביות חלודות ובנינו את הריהוט שכולם מצלמים.</p>
+      <section className="hero split">
+        <div className="hero-split-inner">
+          <div className="hero-content">
+            <div className="hero-tag">// OUR STORY</div>
+            <h1>trash to<br />table.</h1>
+            <p>איך התחלנו עם ערימת חביות חלודות ובנינו את הריהוט שכולם מצלמים.</p>
+          </div>
+          <div className="hero-visual-side">
+            <div className="hero-animated-badge">
+              <div className="badge-inner">מהדורה מוגבלת בעבודת יד</div>
+            </div>
+            <div className="hero-image-wrap">
+              <div className="hero-slider-images">
+                {heroImages.map((src, idx) => (
+                  <img 
+                    key={src} 
+                    src={src} 
+                    alt={`Ironic Collection ${idx + 1}`} 
+                    className={`slider-img ${idx === currentSlide ? 'active' : ''}`} 
+                  />
+                ))}
+                <div className="slider-dots">
+                  {heroImages.map((_, idx) => (
+                    <button
+                      key={idx}
+                      className={`slider-dot ${idx === currentSlide ? 'active' : ''}`}
+                      onClick={() => setCurrentSlide(idx)}
+                      aria-label={`Slide ${idx + 1}`}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -269,7 +317,7 @@ export default function Story() {
                   <p className="value-desc">כל חבית יכולה לשאת את הלוגו שלכם. המותג שלכם על הברזל, לנצח.</p>
                 </div>
                 <div className="value-card-image">
-                  <img src="/coca-cola-set.jpg" alt="Muted coca cola barrel" />
+                  <img src="/photo.png" alt="A person taking a picture of the set in a pub" />
                 </div>
               </div>
           </div>
@@ -309,10 +357,16 @@ export default function Story() {
           <h2 className="section-title" style={{ textAlign: 'center' }}>איך זה נראה<br /><span className="cyan">במציאות.</span></h2>
           <div className="story-collage" style={{ marginTop: '60px' }}>
             <div className="story-circle-wrapper">
-              <img src="/product-blue.jpg" alt="Blue Barrel Set" className="story-circle-img" />
+              <img src="/bar.png" alt="Bar layout" className="story-circle-img" />
             </div>
             <div className="story-circle-wrapper pink-theme">
-              <img src="/product-green.jpg" alt="Green Barrel Set" className="story-circle-img" />
+              <img src="/bar-sitting-women.png" alt="Women sitting at the bar" className="story-circle-img" />
+            </div>
+            <div className="story-circle-wrapper yellow-theme">
+              <img src="/women-bar.png" alt="Women at the bar" className="story-circle-img" />
+            </div>
+            <div className="story-circle-wrapper">
+              <img src="/selfi-naked-bar-orange.jpeg" alt="Selfie at naked bar orange" className="story-circle-img" />
             </div>
           </div>
         </div>

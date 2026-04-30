@@ -57,14 +57,14 @@ export default function BlogPost() {
           <img 
             src={post.image ? `/${post.image}` : `https://picsum.photos/seed/${post.seed || 'factory'}/1000/600`} 
             alt={post.title}
-            style={{ width: '100%', height: 'auto', borderRadius: '20px', boxShadow: '0 20px 40px rgba(0,0,0,0.4)', objectFit: 'cover', aspectRatio: '3/2' }}
+            style={{ width: '100%', height: 'auto', borderRadius: '20px', boxShadow: '0 20px 40px rgba(0,0,0,0.4)', objectFit: 'cover', aspectRatio: '21/9' }}
           />
         </div>
 
-        <div className="blog-post-content" style={{ maxWidth: '800px', margin: '0 auto', padding: '0 20px 100px', fontSize: '18px', lineHeight: '1.8', color: 'rgba(255,255,255,0.85)' }}>
+        <div className="blog-post-content" style={{ maxWidth: '800px', margin: '0 auto', padding: '0 20px 60px', fontSize: '18px', lineHeight: '1.8', color: 'rgba(255,255,255,0.85)' }}>
           <div dangerouslySetInnerHTML={{ __html: post.content }} />
           
-          <div style={{ marginTop: '60px', padding: '40px', background: 'rgba(255,255,255,0.02)', borderRadius: '20px', border: '1px solid rgba(255,255,255,0.05)', textAlign: 'center' }}>
+          <div style={{ marginTop: '20px', padding: '40px', background: 'rgba(255,255,255,0.02)', borderRadius: '20px', border: '1px solid rgba(255,255,255,0.05)', textAlign: 'center' }}>
             <h3 style={{ fontSize: '24px', color: 'var(--white)', marginBottom: '20px', fontFamily: 'var(--font-display)' }}>אהבתם את המאמר?</h3>
             <p style={{ marginBottom: '20px' }}>שתפו אותו או בואו לעצב את פריט האמנות הייחודי שלכם.</p>
             <Link to="/projects" className="btn-primary" style={{ display: 'inline-flex' }}>חזרה לכלל העבודות שלנו ←</Link>
